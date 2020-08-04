@@ -11,11 +11,13 @@
     "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "heroku-postbuild": "yarn build"
   },
   "scripts": {
     "dev-backend": "nodemon backend/server.js",
-    "start": "react-scripts start",
+    "start": "node backend/server.js",
+    "dev-start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
