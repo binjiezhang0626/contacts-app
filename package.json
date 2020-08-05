@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mysql": "^2.18.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
@@ -52,7 +53,7 @@
       "window": true,
       "document": true,
       "expect": true,
-      "test":true
+      "test": true
     }
   },
   "browserslist": {
