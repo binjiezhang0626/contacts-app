@@ -22,8 +22,8 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "dev-backend": "nodemon backend/server.js",
-    "start": "node backend/server.js",
+    "dev-backend": "nodemon backend/index.js",
+    "start": "node backend/index.js",
     "dev-start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

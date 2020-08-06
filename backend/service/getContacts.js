@@ -1,12 +1,4 @@
-const mysqlConnection = require('./database');
-
-const queryWithPromise = (dataConnection, queryStatement, queryInput = []) => new Promise(
-  (resolve, reject) => {
-    dataConnection.query(queryStatement, queryInput, (error, result) => (
-      error ? reject(error) : resolve(result)
-    ));
-  },
-);
+const queryWithPromise = require('../model/database');
 
 const getContacts = async (options) => {
   const { pagination, sort, filter } = options;
@@ -23,13 +15,11 @@ const getContacts = async (options) => {
   ];
   const getContactsQueryStatement = `SELECT SQL_CALC_FOUND_ROWS Contact.UserID, Contact.Title, Contact.Name, Contact.BirthDate, Contact.IsFavorite, Count(*) AS Count FROM ContactDetail INNER JOIN Contact ON Contact.UserID = ContactDetail.UserID ${filterStatement} GROUP BY ContactDetail.UserID ${sortStatement} ${limitStatement}`;
   const contacts = await queryWithPromise(
-    mysqlConnection,
     getContactsQueryStatement,
     getContactsQueryInput,
   ).catch((error) => { throw error; });
   const getContactsCountQueryStatement = 'SELECT FOUND_ROWS() as count';
   const count = await queryWithPromise(
-    mysqlConnection,
     getContactsCountQueryStatement,
     [],
   ).catch((error) => { throw error; });
@@ -37,18 +27,4 @@ const getContacts = async (options) => {
   return { contacts, count };
 };
 
-const getContactDetail = async (userID) => {
-  const getContactDetailQueryStatement = `SELECT * FROM Expedia.ContactDetail WHERE UserID = ${userID}`;
-  const getContactDetailQueryInput = [userID];
-  const response = await queryWithPromise(
-    mysqlConnection,
-    getContactDetailQueryStatement,
-    getContactDetailQueryInput,
-  ).catch((error) => { throw error; });
-  return response;
-};
-
-module.exports = {
-  getContacts,
-  getContactDetail,
-};
+module.exports = getContacts;
