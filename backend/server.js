@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { getContacts, getContactDetail } = require('./databaseService');
+const { getContacts, getContactDetail } = require('./service');
 
 const port = process.env.PORT;
 const app = express();
@@ -9,12 +9,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('./build'));
 
-app.get('/api/contacts', async (req, res) => {
+app.get('/api/v1/contacts', async (req, res) => {
   try {
     const options = {
       pagination: {
-        pageNumber: parseInt(req.query.pageNumber, 10) || 1,
-        numberPerPage: parseInt(req.query.numberPerPage, 10) || 10,
+        page: parseInt(req.query.page, 10) || 0,
+        rowsPerPage: parseInt(req.query.rowsPerPage, 10) || 10,
       },
       sort: {
         key: req.query.sortKey || 'UserID',
@@ -25,10 +25,11 @@ app.get('/api/contacts', async (req, res) => {
         value: req.query.filterValue || '',
       },
     };
-    const contacts = await getContacts(options);
+    const result = await getContacts(options);
     const response = {
       status: 'success',
-      data: contacts,
+      contacts: result.contacts,
+      count: result.count[0].count,
     };
     res.status(200).json(response);
   } catch (error) {
@@ -40,13 +41,13 @@ app.get('/api/contacts', async (req, res) => {
   }
 });
 
-app.get('/api/contacts/:userID', async (req, res) => {
+app.get('/api/v1/contacts/:userID', async (req, res) => {
   try {
     const { userID } = req.params;
     const detail = await getContactDetail(userID);
     const response = {
       status: 'success',
-      data: detail,
+      detail,
     };
     res.status(200).json(response);
   } catch (error) {
