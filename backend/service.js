@@ -10,7 +10,7 @@ const queryWithPromise = (dataConnection, queryStatement, queryInput = []) => ne
 
 const getContacts = async (options) => {
   const { pagination, sort, filter } = options;
-  const limitStatement = `LIMIT ${(pagination.pageNumber - 1) * pagination.numberPerPage}, ${pagination.numberPerPage}`;
+  const limitStatement = `LIMIT ${(pagination.page) * pagination.rowsPerPage}, ${pagination.rowsPerPage}`;
   const sortStatement = `ORDER BY Contact.${sort.key} ${sort.order}`;
   const filterStatement = filter.key && filter.value ? `WHERE ${filter.key} = ${filter.value}` : '';
   const getContactsQueryInput = [
@@ -18,16 +18,23 @@ const getContacts = async (options) => {
     filter.order,
     sort.key,
     sort.order,
-    pagination.pageNumber,
-    pagination.numberPerPage,
+    pagination.page,
+    pagination.rowsPerPage,
   ];
-  const getContactsQueryStatement = `SELECT Contact.Title, Contact.Title, Contact.Name, Contact.BirthDate, Contact.IsFavorite, Count(*) AS Count FROM Expedia.ContactDetail INNER JOIN Expedia.Contact ON Contact.UserID = ContactDetail.UserID ${filterStatement} GROUP BY ContactDetail.UserID ${sortStatement} ${limitStatement}`;
-  const response = await queryWithPromise(
+  const getContactsQueryStatement = `SELECT SQL_CALC_FOUND_ROWS Contact.UserID, Contact.Title, Contact.Name, Contact.BirthDate, Contact.IsFavorite, Count(*) AS Count FROM ContactDetail INNER JOIN Contact ON Contact.UserID = ContactDetail.UserID ${filterStatement} GROUP BY ContactDetail.UserID ${sortStatement} ${limitStatement}`;
+  const contacts = await queryWithPromise(
     mysqlConnection,
     getContactsQueryStatement,
     getContactsQueryInput,
   ).catch((error) => { throw error; });
-  return response;
+  const getContactsCountQueryStatement = 'SELECT FOUND_ROWS() as count';
+  const count = await queryWithPromise(
+    mysqlConnection,
+    getContactsCountQueryStatement,
+    [],
+  ).catch((error) => { throw error; });
+
+  return { contacts, count };
 };
 
 const getContactDetail = async (userID) => {
