@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -38,7 +39,7 @@ export default function DetailDialog(props) {
 }
 
 DetailDialog.propTypes = {
-  contactDetail: PropTypes.shape([{}]).isRequired,
+  contactDetail: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
 };

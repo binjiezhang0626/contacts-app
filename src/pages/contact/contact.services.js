@@ -7,6 +7,7 @@ async function getContacts(options) {
       rowsPerPage: options.rowsPerPage,
       sortKey: options.sortKey,
       sortOrder: options.sortOrder,
+      filterValue: options.filterValue,
     },
   });
   return result;
