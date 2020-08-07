@@ -1,4 +1,4 @@
-const vaildationMiddleware = (req, res, next) => {
+const validationMiddleware = (req, res, next) => {
   const options = {
     pagination: {
       page: parseInt(req.query.page, 10) || 0,
@@ -9,7 +9,6 @@ const vaildationMiddleware = (req, res, next) => {
       order: req.query.sortOrder || 'ASC',
     },
     filter: {
-      key: req.query.filterKey || '',
       value: req.query.filterValue || '',
     },
   };
@@ -17,4 +16,4 @@ const vaildationMiddleware = (req, res, next) => {
   next();
 };
 
-module.exports = vaildationMiddleware;
+module.exports = validationMiddleware;

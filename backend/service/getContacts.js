@@ -4,10 +4,9 @@ const getContacts = async (options) => {
   const { pagination, sort, filter } = options;
   const limitStatement = `LIMIT ${(pagination.page) * pagination.rowsPerPage}, ${pagination.rowsPerPage}`;
   const sortStatement = `ORDER BY Contact.${sort.key} ${sort.order}`;
-  const filterStatement = filter.key && filter.value ? `WHERE ${filter.key} = ${filter.value}` : '';
+  const filterStatement = filter.value ? `WHERE Name LIKE '%${filter.value}%'` : '';
   const getContactsQueryInput = [
-    filter.key,
-    filter.order,
+    filter.value,
     sort.key,
     sort.order,
     pagination.page,

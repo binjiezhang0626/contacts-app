@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -10,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import getAge from 'age-by-birthdate';
 import DetailDialog from '../../components/detailDialog';
 import SortableTableHead from '../../components/sortableTableHead';
+import SearchTableToolBar from '../../components/searchTableToolBar';
 import { getContacts, getContactDetail } from './contact.services';
 
 const columns = [
@@ -44,6 +46,7 @@ export default function Contact() {
   const [open, setOpen] = useState(false);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('UserID');
+  const [searchValue, setSearchValue] = useState('');
 
   const getContactList = async (options) => {
     const response = await getContacts(options);
@@ -74,14 +77,27 @@ export default function Contact() {
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
+  const handleChangeSearchInput = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleSubmitSearch = (event) => {
+    if (event.key === 'Enter') {
+      getContactList({
+        page, rowsPerPage, sortKey: orderBy, sortOrder: order, filterValue: searchValue,
+      });
+    }
+  };
+
   useEffect(() => {
     getContactList({
-      page, rowsPerPage, sortKey: orderBy, sortOrder: order,
+      page, rowsPerPage, sortKey: orderBy, sortOrder: order, filterValue: searchValue,
     });
   }, [page, rowsPerPage, orderBy, order]);
 
@@ -100,6 +116,11 @@ export default function Contact() {
 
   return (
     <Paper className={classes.root}>
+      <SearchTableToolBar
+        value={searchValue}
+        onInputChange={handleChangeSearchInput}
+        onKeyPress={handleSubmitSearch}
+      />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <SortableTableHead

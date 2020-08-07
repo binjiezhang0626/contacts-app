@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
@@ -38,7 +39,7 @@ export default function SortableTableHead(props) {
 }
 
 SortableTableHead.propTypes = {
-  columns: PropTypes.shape([{}]).isRequired,
+  columns: PropTypes.array.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   onRequestSort: PropTypes.func.isRequired,

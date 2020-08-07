@@ -1,7 +1,7 @@
 const queryWithPromise = require('../model/database');
 
 const getContactDetail = async (userID) => {
-  const getContactDetailQueryStatement = `SELECT * FROM Expedia.ContactDetail WHERE UserID = ${userID}`;
+  const getContactDetailQueryStatement = `SELECT * FROM ContactDetail WHERE UserID = ${userID}`;
   const getContactDetailQueryInput = [userID];
   const response = await queryWithPromise(
     getContactDetailQueryStatement,

@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Contact from './pages/contact';
-// import './App.css';
 
 const useStyles = makeStyles({
   app: {
