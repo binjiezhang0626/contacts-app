@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     height: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'auto',
   },
 });
 

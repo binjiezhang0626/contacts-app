@@ -1,4 +1,4 @@
-const queryWithPromise = require('../model/database');
+const queryWithPromise = require('../database/database');
 
 const getContacts = async (options) => {
   const { pagination, sort, filter } = options;
