@@ -22,11 +22,11 @@ This project is deployed on Heroku [Try the app](https://contacts-app-page.herok
 * **Backend** 
 
   | Tech choices | 
-  | --- | --- |
-  | Express | easy-to-use and efficient |
-  | RESTful API |      |
-  | Heroku ClearDB MySQL add-on | |
-  | npm mysql | |
+  | --- |
+  | Express |
+  | RESTful API      |
+  | Heroku ClearDB MySQL add-on |
+  | npm mysql |
  
 ---
 ## Deployment strategy 
