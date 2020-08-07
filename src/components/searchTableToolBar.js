@@ -58,8 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchTableToolBar(props) {
-  const { value, onInputChange, onKeyPress } = props;
+export default function SearchTableToolBar({ value, onInputChange, onKeyPress }) {
   const classes = useStyles();
   return (
     <div className={classes.searchBarRoot}>

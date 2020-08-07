@@ -1,11 +1,12 @@
 const express = require('express');
-const { getContacts, getContactDetail } = require('../service');
+const { getContacts, getContactDetail, getPaginationInfo } = require('../service');
 
 const contactRouter = express.Router();
 
 contactRouter.get('/', async (req, res) => {
   try {
-    const result = await getContacts(req.body.options);
+    const options = getPaginationInfo(req.query);
+    const result = await getContacts(options);
     const response = {
       status: 'success',
       contacts: result.contacts,

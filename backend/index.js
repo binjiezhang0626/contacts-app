@@ -1,7 +1,7 @@
 require('dotenv').config();
+const server = require('./server');
 
 const { PORT } = process.env;
-const server = require('./server');
 
 server.listen(PORT, () => {
   /* eslint-disable no-alert, no-console */

@@ -1,4 +1,4 @@
-const queryWithPromise = require('../model/database');
+const queryWithPromise = require('../database/database');
 
 const getContactDetail = async (userID) => {
   const getContactDetailQueryStatement = `SELECT * FROM ContactDetail WHERE UserID = ${userID}`;

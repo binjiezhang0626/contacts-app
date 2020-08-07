@@ -1,7 +1,7 @@
 import http from '../../util/http';
 
 async function getContacts(options) {
-  const result = await http.get('/api/v1/contacts', {
+  return http.get('/api/v1/contacts', {
     params: {
       page: options.page,
       rowsPerPage: options.rowsPerPage,
@@ -10,12 +10,10 @@ async function getContacts(options) {
       filterValue: options.filterValue,
     },
   });
-  return result;
 }
 
 async function getContactDetail(userID) {
-  const result = await http.get(`/api/v1/contacts/${userID}`);
-  return result;
+  return http.get(`/api/v1/contacts/${userID}`);
 }
 
 export { getContacts, getContactDetail };

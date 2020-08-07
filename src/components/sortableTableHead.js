@@ -6,33 +6,34 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
-export default function SortableTableHead(props) {
-  const {
-    columns, order, orderBy, onRequestSort,
-  } = props;
+export default function SortableTableHead({
+  columns, order, orderBy, onRequestSort,
+}) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
+  const HeadRow = columns.map((column) => (
+    <TableCell
+      key={column.id}
+      align={column.align}
+      padding={column.disablePadding ? 'none' : 'default'}
+      sortDirection={orderBy === column.id ? order : false}
+    >
+      <TableSortLabel
+        active={orderBy === column.id}
+        direction={orderBy === column.id ? order : ''}
+        onClick={column.id !== 'Count' ? createSortHandler(column.id) : () => { }}
+      >
+        {column.label}
+      </TableSortLabel>
+    </TableCell>
+  ));
+
   return (
     <TableHead>
       <TableRow>
-        {columns.map((column) => (
-          <TableCell
-            key={column.id}
-            align={column.align}
-            padding={column.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === column.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === column.id}
-              direction={orderBy === column.id ? order : 'asc'}
-              onClick={column.id !== 'Count' ? createSortHandler(column.id) : () => { }}
-            >
-              {column.label}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+        {HeadRow}
       </TableRow>
     </TableHead>
   );

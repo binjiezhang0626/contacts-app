@@ -32,7 +32,12 @@ const useStyles = makeStyles({
     width: '50%',
   },
   container: {
+    // maxHeight: '80%',
     maxHeight: 580,
+    minHeight: 300,
+  },
+  tableRow: {
+    cursor: 'pointer',
   },
 });
 
@@ -102,7 +107,7 @@ export default function Contact() {
   }, [page, rowsPerPage, orderBy, order]);
 
   const TableRows = rows.map((row) => (
-    <TableRow hover role="checkbox" tabIndex={-1} key={row.UserID} onClick={() => handleClickOpen(row.UserID)}>
+    <TableRow className={classes.tableRow} hover role="checkbox" tabIndex={-1} key={row.UserID} onClick={() => handleClickOpen(row.UserID)}>
       {columns.map((column) => {
         const value = row[column.id];
         return (
