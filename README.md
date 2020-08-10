@@ -46,9 +46,9 @@ This project is deployed on Heroku [Try the app](https://contacts-app-page.herok
   ```
   cp .env.example .env
   ```
-- replace mysqlConnection with the defination below in `/backend/database/database.js`
+- replace mysqlConnectionPool with the defination below in `/backend/database/database.js`
   ```javascript
-  const mysqlConnection = mysql.createPool({
+  const mysqlConnectionPool = mysql.createPool({
     connectionLimit: 10,
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
@@ -61,9 +61,11 @@ This project is deployed on Heroku [Try the app](https://contacts-app-page.herok
   ```
   yarn install
   ```
-- Start the application
+- Start the application in two terminals
   ```
   yarn dev-backend
+  ```
+  ```
   yarn dev-start
   ```
 
